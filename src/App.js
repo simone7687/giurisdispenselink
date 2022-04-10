@@ -4,7 +4,7 @@ import ErrorBoundary from "shared/ErrorBoundary";
 import ValidLinks from "ValidLinks";
 
 const routes = [
-    { title: "Link Validi", path: "/validlinks", element: <ValidLinks /> },
+    { title: "Link Validi", path: "/", element: <ValidLinks /> },
 ];
 function App() {
     return (
