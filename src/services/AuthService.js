@@ -6,28 +6,10 @@ export default class AuthService {
         this.fetch = this.fetch.bind(this) // React binding stuff
     }
 
-    loggedIn() {
-        return true
-    }
-
-    setToken(idToken) {
-        // Saves user token to localStorage
-        localStorage.setItem('id_token', idToken)
-    }
-
-    fetch(url, token, options) {
-        // performs api calls sending the required authentication headers
+    fetch(url, options) {
         const headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        }
-
-        if (token) {
-            // Setting Authorization header
-            // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
-            if (this.loggedIn()) {
-                headers['Authorization'] = 'Bearer ' + token
-            }
         }
 
         return fetch(url, {
@@ -55,6 +37,5 @@ export default class AuthService {
             throw error
         }
     }
-
 }
 

@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import GeneralService from 'services/DocsityService';
 function LinkValidObj(props) {
     const ExpandMore = styled((props) => {
         const { expand, ...other } = props;
@@ -31,6 +32,31 @@ function LinkValidObj(props) {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const id = props.id
+    const data = props.data
+    const [image, setImage] = React.useState();
+
+    React.useEffect(() => {
+        const abortController = new AbortController();
+        const docsityService = new GeneralService();
+        if (!data?.link) {
+            setImage(null)
+            return
+        }
+        docsityService.getPageImage(data?.link, abortController).then(res => {
+            if (abortController.signal.aborted) {
+                return;
+            }
+            setImage(res?.data)
+        }).catch(err => {
+            console.log(err)
+        })
+
+        return function cleanUp() {
+            abortController.abort();
+        }
+    }, [data, id]);
 
     return (
         <Card sx={{ maxWidth: 345 }}>
